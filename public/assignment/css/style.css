@@ -5,3 +5,6 @@ input.form-control{
 body {
     padding-top: 36px;
 }
+label{
+    padding-top: 20px;
+}
