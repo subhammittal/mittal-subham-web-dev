@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/assignment/css/style.css" rel="stylesheet"/>
-</head>
-<body>
 <nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/assignment/view/widget/widget-list.html">
+            <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 Choose Widget
             </a>
@@ -25,7 +13,7 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <a href="/assignment/view/widget/widget-header.html">Header </a>
+            <a ng-click="model.createWidget('HEADER')">Header </a>
         </div>
         <div class="form-group">
             <a href="#">Label </a>
@@ -43,10 +31,10 @@
             <a href="#">Button </a>
         </div>
         <div class="form-group">
-            <a href="/assignment/view/widget/widget-image.html">Image </a>
+            <a ng-click="model.createWidget('IMAGE')">Image </a>
         </div>
         <div class="form-group">
-            <a href="/assignment/view/widget/widget-youtube.html">Youtube </a>
+            <a ng-click="model.createWidget('YOUTUBE')">Youtube </a>
         </div>
         <div class="form-group">
             <a href="#">Data Table </a>
@@ -60,12 +48,10 @@
         <div class="row navbar-text">
 
             <div class="col-xs-3 text-center pull-right">
-                <a href="/assignment/view/user/profile.html">
+                <a href="#/user/{{model.uid}}">
                     <span class="glyphicon glyphicon glyphicon-user"></span>
                 </a>
             </div>
         </div>
     </div>
 </nav>
-</body>
-</html>

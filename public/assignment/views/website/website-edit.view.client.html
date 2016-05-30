@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/assignment/css/style.css" rel="stylesheet"/>
-</head>
-<body>
 <nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/assignment/view/website/website-list.html">
+            <a href="#/user/{{model.uid}}/website" class="navbar-link">
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 Edit Website
             </a>
             <p class="navbar-text pull-right">
-                <a href="/assignment/view/website/website-edit.html" class="navbar-link">
+                <a ng-click="model.updateWebsite()" class="navbar-link">
           <span class="glyphicon glyphicon-ok">
           </span>
                 </a>
@@ -30,17 +18,18 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <label for="website-name">Website Name </label>
-            <input type="text" class="form-control" id="website-name"  value="Apple" placeholder="Google">
+            <label for="name">Website Name </label>
+            <input ng-model="model.website.name" name="name" type="text" class="form-control" id="website-name"  value="Apple" placeholder="Google">
         </div>
         <div class="form-group">
             <label for="description">Website Description</label>
-            <textarea id="description"
+            <textarea ng-model="model.website.description"
+                      id="description"
                       class="form-control"
                       rows="4"
                       placeholder="Description" ></textarea>
         </div>
-        <a class="btn btn-danger btn-block" href="website-new.html" role="button">Delete</a>
+        <a class="btn btn-danger btn-block" ng-click="model.deleteWebsite()" >Delete</a>
         </form>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
@@ -48,7 +37,7 @@
         <div class="row navbar-text">
 
             <div class="col-xs-3 text-center pull-right">
-                <a href="/assignment/view/user/profile.html">
+                <a href="#/user/{{model.uid}}">
                     <span class="glyphicon glyphicon glyphicon-user"></span>
                 </a>
             </div>
