@@ -1,75 +1,74 @@
-/**
- * Created by SubhamMittal on 5/29/16.
- */
 (function() {
     angular
         .module("WebAppMaker")
         .factory("UserService", UserService);
 
-    function UserService() {
+    function UserService($http) {
 
-        // this will be removed in future with a DB
-        var dummyUsers = [
-            {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-            {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-            {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
-        ];
+        function login(username, password) {
+            var url = "/api/login";
+            var user = {
+                username: username,
+                password: password
+            };
+            return $http.post(url, user);
+        }
 
-        var users = dummyUsers;
+        function register(username, password) {
+            var user = {
+                username: username,
+                password: password
+            };
+            return $http.post("/api/register", user);
+        }
 
-        function createUser(user) {
-            users.push(user);
+        function logout() {
+            return $http.post('/api/logout');
+        }
+
+        function checkLoggedin() {
+            return $http.get("/api/loggedin");
+        }
+
+        function createUser(username, password) {
+            var url = "/api/user";
+            var user = {
+                username: username,
+                password: password
+            };
+            return $http.post(url, user);
         }
 
         function findUserById(userId) {
-            for (var i in users) {
-                if (users[i]._id == userId) {
-                    return users[i];
-                }
-            }
-            return null;
+            var url = "/api/user/" + userId;
+            return $http.get(url);
         }
 
         function findUserByUsername(username) {
-            for(var i in users) {
-                if (users[i].username === username) {
-                    return users[i];
-                }
-            }
-            return null;
+            var url = "/api/user?username=" + username;
+            return $http.get(url);
         }
 
         function findUserByCredentials(username, password) {
-            for(var i in users) {
-                if(users[i].username === username && users[i].password == password) {
-                    return users[i];
-                }
-            }
-            return null;
+            var url = "/api/user?username=" + username + "&password=" + password;
+            return $http.get(url);
         }
 
         function updateUser(userId, user) {
-            for(var i in users) {
-                if(users[i]._id == userId) {
-                    users[i].firstName = user.firstName;
-                    users[i].lastName = user.lastName;
-                    users[i].email = user.email;
-                    return true;
-                }
-            }
-            return false;
+            var url = "/api/user/" + userId;
+            return $http.put(url, user);
         }
 
         function deleteUser(userId) {
-            for(var i in users) {
-                if (users[i]._id == userId) {
-                    users.splice(i, 1);
-                }
-            }
+            var url="/api/user/" + userId;
+            return $http.delete(url);
         }
 
         return {
+            login: login,
+            register: register,
+            logout: logout,
+            checkLoggedin: checkLoggedin,
             createUser: createUser,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
@@ -80,4 +79,3 @@
     }
 
 })();
-

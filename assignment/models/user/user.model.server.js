@@ -1,28 +1,13 @@
-/**
- * Created by SubhamMittal on 6/12/16.
- */
-module.exports = function() {
+module.exports = function () {
 
     var mongoose = require("mongoose");
 
     var UserSchema = require("./user.schema.server")();
     var User = mongoose.model("User", UserSchema);
 
-    var api = {
-        createUser: createUser,
-        findUserById: findUserById,
-        findUserByCredentials: findUserByCredentials,
-        findUserByUsername: findUserByUsername,
-        updateUser: updateUser,
-        deleteUser: deleteUser,
-        addWebsiteIdToUser: addWebsiteIdToUser,
-        removeWebsiteIdFromUser: removeWebsiteIdFromUser
-    };
-    return api;
-
     function addWebsiteIdToUser(websiteId, userId) {
         return User.findOne({_id: userId},
-            function(err, doc) {
+            function (err, doc) {
                 doc.websites.push(websiteId);
                 doc.save();
             });
@@ -30,7 +15,7 @@ module.exports = function() {
 
     function removeWebsiteIdFromUser(websiteId, userId) {
         return User.findOne({_id: userId},
-            function(err, doc) {
+            function (err, doc) {
                 doc.websites.pull(websiteId);
                 doc.save();
             });
@@ -55,12 +40,12 @@ module.exports = function() {
     function updateUser(userId, newUser) {
         return User.update(
             {_id: userId},
-            {$set :
             {
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                email: newUser.email
-            }
+                $set: {
+                    firstName: newUser.firstName,
+                    lastName: newUser.lastName,
+                    email: newUser.email
+                }
             }
         )
     }
@@ -68,4 +53,25 @@ module.exports = function() {
     function deleteUser(userId) {
         return User.remove({_id: userId});
     }
+
+    function findUserByFacebookId(facebookId) {
+        return User.findOne(
+            {
+                'facebook.id': facebookId
+            }
+        );
+    }
+
+    return {
+        createUser: createUser,
+        findUserById: findUserById,
+        findUserByCredentials: findUserByCredentials,
+        findUserByUsername: findUserByUsername,
+        updateUser: updateUser,
+        deleteUser: deleteUser,
+        addWebsiteIdToUser: addWebsiteIdToUser,
+        removeWebsiteIdFromUser: removeWebsiteIdFromUser,
+        findUserByFacebookId: findUserByFacebookId
+    };
+
 };

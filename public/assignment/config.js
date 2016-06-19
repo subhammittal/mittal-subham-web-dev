@@ -1,16 +1,10 @@
-
-(function () {
+(function() {
     angular
         .module("WebAppMaker")
         .config(Config);
 
     function Config($routeProvider) {
         $routeProvider
-            .when("/", {
-                templateUrl: "views/user/login.view.client.html",
-                controller: "LoginController",
-                controllerAs: "model"
-            })
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",
@@ -21,10 +15,21 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
+            .when("/user", {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
             .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/user/:uid/website", {
                 templateUrl: "views/website/website-list.view.client.html",
@@ -80,5 +85,33 @@
             .otherwise({
                 redirectTo: "/login"
             });
+
+        function checkLoggedin(UserService, $q, $location, $rootScope) {
+            var deferred = $q.defer();
+            UserService
+                .checkLoggedin()
+                .then(
+                    function(res) {
+                        var user = res.data;
+                        if (user == '0') {
+                            deferred.reject();
+                            $rootScope.currentUser = null;
+                            $location.url("/login");
+                        }
+                        else {
+                            $rootScope.currentUser = user;
+                            deferred.resolve();
+                        }
+                    },
+                    function(error) {
+                        deferred.reject();
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    }
+                );
+
+            return deferred.promise;
+        }
     }
+
 })();

@@ -1,121 +1,289 @@
-/**
- * Created by SubhamMittal on 6/5/16.
- */
-module.exports = function(app) {
-    var dummyUsers = [
-        {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-        {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-        {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
-    ];
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var bcrypt = require("bcrypt-nodejs");
 
-    var users = dummyUsers;
+module.exports = function(app, models) {
+
+    var userModel = models.userModel;
+
+    var facebookConfig = {
+        clientID     : process.env.FACEBOOK_CLIENT_ID,
+        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+    };
 
     app.get("/api/user", getUsers);
+    app.post("/api/login", passport.authenticate('wam'), login);
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/assignment/#/user',
+            failureRedirect: '/assignment/#/login'
+        }));
+    app.post("/api/register", register);
+    app.post('/api/logout', logout);
+    app.get ('/api/loggedin', loggedin);
     app.post("/api/user", createUser);
     app.get("/api/user/:userId", findUserById);
     app.put("/api/user/:userId", updateUser);
-    app.delete("/api/user/:userId", deleteUser);
+    app.delete("/api/user/:userId", authorized, deleteUser);
 
-    String.prototype.hashCode = function() {
-        var hash = 0;
-        var char;
-        if (this.length == 0)
-            return hash;
-        for (var i = 0; i < this.length; i++) {
-            char = this.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
+    passport.use('wam', new LocalStrategy(localStrategy));
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+
+    function authorized(req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.sendStatus(401);
         }
-        return hash;
-    };
+        else {
+            next();
+        }
+    }
 
-    function getUsers(request, response) {
-        var username = request.query['username'];
-        var password = request.query['password'];
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel
+            .findUserById(user._id)
+            .then(
+                function(user) {
+                    done(null, user);
+                },
+                function(err) {
+                    done(err, null);
+                }
+            );
+    }
+
+    function localStrategy(username, password, done) {
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function(user) {
+                    if (user && bcrypt.compareSync(password, user.password)) {
+                        return done(null, user);
+                    }
+                    else {
+                        return done(null, false);
+                    }
+                },
+                function(err) {
+                    if (err) {
+                        return done(err);
+                    }
+                }
+            )
+    }
+
+    function facebookStrategy(token, refreshToken, profile, done) {
+        userModel
+            .findUserByFacebookId(profile.id)
+            .then(
+                function(user) {
+                    if (user) {
+                        return done(null, user);
+                    }
+                    else {
+                        var newUser = {
+                            username: profile.displayName.replace(/ /g, '').toLowerCase(),
+                            facebook: {
+                                id: profile.id,
+                                token: token,
+                                displayName: profile.displayName
+                            }
+                        };
+                        userModel
+                            .createUser(newUser)
+                            .then(
+                                function(user) {
+                                    return done(null, user);
+                                }
+                            )
+                    }
+                }
+            );
+
+    }
+
+    function login(req, res) {
+        var user = req.user;
+        res.json(user);
+    }
+
+    function register(req, res) {
+        var username = req.body.username;
+        var password = req.body.password;
+
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function(user) {
+                    if(user) {
+                        res.status(400).send("Username already exists");
+                    }
+                    else {
+                        req.body.password = bcrypt.hashSync(password);
+                        return userModel
+                            .createUser(req.body);
+                    }
+                },
+                function(error) {
+                    res.status(400).send(error);
+                }
+            )
+            .then(
+                function(user) {
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function(error) {
+                    res.status(400).send(error);
+                }
+            )
+    }
+
+    function logout(req, res) {
+        req.logout();
+        res.sendStatus(200);
+    }
+
+    function loggedin(req, res) {
+        if (req.isAuthenticated()) {
+            res.json(req.user);
+        }
+        else {
+            res.send('0');
+        }
+    }
+
+
+    function createUser(req, res) {
+        var newUser = req.body;
+        userModel
+            .findUserByUsername(newUser.username)
+            .then(
+                function(user) {
+                    if(!user) {
+                        userModel
+                            .createUser(newUser)
+                            .then(
+                                function(user) {
+                                    res.json(user);
+                                },
+                                function(error) {
+                                    res.status(400).send("Unable to create new user: " + newUser.username);
+                                }
+                            );
+                    }
+                    else {
+                        res.status(400).send("Username " + newUser.username + " is already in use");
+                    }
+                },
+                function(error) {
+                    res.status(400).send(error);
+                }
+            )
+    }
+
+
+    function deleteUser(req, res) {
+        var userId = req.params.userId;
+        userModel
+            .deleteUser(userId)
+            .then(
+                function(status) {
+                    res.sendStatus(200);
+                },
+                function(error) {
+                    res.status(404).send("Unable to remove user with ID " + userId);
+                }
+            );
+    }
+
+    function updateUser(req, res) {
+        var userId = req.params.userId;
+        var newUser = req.body;
+        userModel
+            .updateUser(userId, newUser)
+            .then(
+                function(user) {
+                    res.sendStatus(200);
+                },
+                function(error) {
+                    res.status(404).send("Unable to update user with ID " + userId);
+                }
+            );
+    }
+
+    function getUsers(req, res) {
+        var username = req.query['username'];
+        var password = req.query['password'];
         if(username && password) {
-            findUserByCredentials(username, password, response);
-        } else if (username) {
-            findUserByUsername(username, response);
-        } else {
-            response.send(users);
+            findUserByCredentials(username, password, req, res);
+        }
+        else if (username) {
+            findUserByUsername(username, req, res);
+        }
+        else {
+            res.status(403).send("Username and Password not Provided");
         }
     }
 
-    function createUser(request, response) {
-        var newUser = request.body;
-        for (var i in users) {
-            if(users[i].username === newUser.username) {
-                response.status(400)
-                    .send("Username " + newUser.username + " is already in use");
-                return;
-            }
-        }
-        newUser._id = (newUser.username + newUser.password + (new Date()).getTime().toString()).hashCode().toString();
-        users.push(newUser);
-        response.json(newUser);
+    function findUserByCredentials(username, password, req, res) {
+        req.session.username = username;
+        userModel
+            .findUserByCredentials(username, password)
+            .then(
+                function(user) {
+                    if(user) {
+                        res.json(user);
+                    }
+                    else {
+                        res.status(403).send("Username and Password Not Found");
+                    }
+                },
+                function(error) {
+                    res.status(403).send("Unable to login");
+                }
+            );
     }
 
-    function deleteUser(request, response) {
-        var id = request.params.userId;
-        for(var i in users) {
-            if(users[i]._id === id) {
-                users.splice(i, 1);
-                response.sendStatus(200);
-                return true;
-            }
-        }
-        response.status(404)
-            .send("Unable to remove user with ID " + id);
+    function findUserByUsername(username, req, res) {
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function(user) {
+                    res.json(user);
+                },
+                function(error) {
+                    res.status(400).send("User with username " + username + " not found");
+                }
+            );
     }
 
-    function updateUser(request, response) {
-        var id = request.params.userId;
-        var newUser = request.body;
-        for(var i in users) {
-            if(users[i]._id == id) {
-                users[i].firstName = newUser.firstName;
-                users[i].lastName = newUser.lastName;
-                users[i].email = newUser.email;
-                response.sendStatus(200);
-                return true;
-            }
-        }
-        response.status(400)
-            .send("User with ID " + id + " not found");
+    function findUserById(req, res) {
+        var userId = req.params.userId;
+        userModel.findUserById(userId)
+            .then(
+                function(user) {
+                    res.send(user);
+                },
+                function(error) {
+                    res.status(400).send(error);
+                }
+            );
     }
-
-    function findUserByCredentials(username, password, response) {
-        for(var i in users) {
-            if(users[i].username === username && users[i].password === password) {
-                response.send(users[i]);
-                return;
-            }
-        }
-        response.sendStatus(403);
-    }
-
-    function findUserByUsername(username, response) {
-        for(var i in users) {
-            if(users[i].username === username) {
-                response.send(users[i]);
-                return;
-            }
-        }
-        response.status(400)
-            .send("User with username " + username + " not found");
-    }
-
-    function findUserById(request, response) {
-        var userId = request.params.userId;
-        for(var i in users) {
-            if(users[i]._id === userId) {
-                response.send(users[i]);
-                return;
-            }
-        }
-        response.status(400)
-            .send("User with ID " + userId + " not found");
-    }
-
 };
