@@ -1,0 +1,44 @@
+﻿<div class="container">
+    <center><h1>TimeLine</h1></center>
+    <div class="col-md-0" id="userinfo">
+     <center>
+        <h2> Welcome </h2> <h3>{{user.username}}</h3>
+    </center>
+        <center>
+            
+            
+            
+            <div class="row">
+                <button class="btn btn-success" ng-model="show" ng-show="show" ng-click="follow()">Follow</button>
+                <button class="btn btn-warning" ng-show="hide" ng-show="hide" ng-click="unfollow()">Unfollow</button>
+            </div>
+        </center>
+    </div>
+    <div class="col-md-0" id="likedobj">
+        <h2>Places Bookmarked by User</h2>
+        <div ng-repeat="like in likes" id="like">
+            
+            <h3><a href="#/details/{{like.place}}">{{like.place}}</a></h3>
+            <div class="row">
+                <h3>{{like.cat}}</h3>
+                <h4><p>{{like.tip}}</p></h4>
+                <h4><a href="{{like.url}}" target="_blank">Place URL</a></h4>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-0" id="reviews">
+        <h2>Reviews</h2>
+        <div ng-repeat ="review in reviews" id="writtenreviews">
+            
+            <div class="row">
+                <h3><a href="#/details/{{review.place}}">{{review.place}}</a></h3>
+                
+            </div>
+            <div class="row"><rating ng-model="review.rate" readonly="true" max="5"></rating></div>
+            <div class="row"><p>{{review.comment}}</p></div>
+        </div>
+    </div>
+    
+</div>

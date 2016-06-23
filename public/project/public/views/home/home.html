@@ -1,0 +1,39 @@
+﻿
+<!--- Login/Sigup -------->
+<div class="row" ng-show="!currentUser">
+     <div class="col-sm-1"></div>
+    <div class="col-md-4 pull-right"> 
+        <button class="btn btn-warning glyphicon glyphicon-log-in" ng-click="signupm()">  Register</button>
+        <button class="btn btn-primary" ng-click="loginm()">Login</button>        
+     </div> 
+
+</div>
+<div class="row" ng-show="currentUser">
+    <div class="col-sm-1"></div>
+    <div class="col-md-3 pull-right">
+        <button class="btn btn-danger" ng-click="logout()">Logout</button>
+    </div>
+
+</div>
+
+<!-- Search -->
+
+        <div class="col-md-3"></div>
+        <div class="text-vertical-left">
+            <h2>Recommendation and Timeline of Visited Places</h2>
+        </div>
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" id="cityname" class="form-control" placeholder="Enter Your City Name" />
+                <span >
+                    <a href="#/search/{{name}}">
+                        <button class="btn btn-success" ng-click="getname()">Search</button></a>
+                </span>
+            </div>
+        </div>
+ 
+
+

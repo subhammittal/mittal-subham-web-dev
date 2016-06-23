@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Index Page</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+
+    <!-- Custom CSS -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet"/>
+    <link href="css/bootstrap-dialog.min.css" rel="stylesheet" />
+
+    <!--FancyBox CSS-->
+     <link href="css/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery.fancybox-buttons.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery.fancybox-thumbs.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+
+    <!-- Required js -->
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <script src="js/bootstrap-dialog.min.js"></script>
+
+    <!-- FancyBox JS --> 
+     <script src="js/jquery.fancybox.pack.js"></script>
+     <script src="js/jquery.fancybox-buttons.js"></script>
+     <script src="js/jquery.fancybox-media.js"></script>
+     <script src="js/jquery.fancybox-thumbs.js"></script>
+
+    <!-- Project Page JS -->
+    <script src="http://maps.google.com/maps/api/js?libraries=places&region=us&language=en&sensor=false"></script>
+    <script src="index.js"></script>
+    <script src="views/home/home.js"></script>
+    <script src="views/search/search.js"></script>
+    <script src="views/details/details.js"></script>
+    <script src="views/profile/edit.js"></script>
+    <script src="views/dashboard/dashboard.js"></script>
+   
+</head>
+
+<body ng-app="NavApp">
+
+    <div ng-controller="NavController">
+        <!-- Navigation -->
+        <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle glyphicon glyphicon-hand-left"></a>  
+        <nav id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                 <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a> 
+                <li class="sidebar-brand">
+                   
+                    <a href="#/home">Home</a>
+                </li>
+                
+                <li>
+                    <a href="#/userprofile/{{currentUser.username}}" ng-show="currentUser">User Profile</a>
+                </li>
+                <li>
+                    <a href="#/dashboard/{{currentUser.username}}" ng-show="currentUser">TimeLine</a>
+                </li>
+                
+                <li>
+                    <a href="#/about">About</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+    <!-- Header -->
+    <header id="top" class="header">
+        <div ng-view>
+        </div>
+    </header>
+ 
+</body>
+</html>
