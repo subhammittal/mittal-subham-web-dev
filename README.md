@@ -1,11 +1,3 @@
-# CS5610 Web Development [![GitHub license](https://img.shields.io/github/license/rajeakshay/WebDevelopment.svg?style=plastic)](https://github.com/rajeakshay/WebDevelopment/blob/master/LICENSE.md)
-Developing sites that are dynamic, data driven and interactive - [http://webdev-amraje.rhcloud.com/](http://webdev-amraje.rhcloud.com/)  
-
-RedHat Openshift Online application details:  
-URL: [http://webdev-amraje.rhcloud.com/](http://webdev-amraje.rhcloud.com/)  
-`node` version: `v4.4.4`  
-`npm` version: `v2.15.1`  
-MongoDB Community Edition version: `v3.2.6`  
 
 # How to clone and host this project/application in RedHat Openshift Online?
 1. Using Openshift Web Console, create an application and install `nodejs-0.10` cartridge provided by Openshift. Node.js version will be updated later using configuration code in [.openshift](https://github.com/rajeakshay/WebDevelopment/tree/master/.openshift) directory.
