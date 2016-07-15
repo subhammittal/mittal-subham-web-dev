@@ -1,0 +1,43 @@
+<div class="container">
+	<form name="myForm" novalidate>
+		<div class="form-group">
+			<label for="widget-name">Name</label>
+			<input ng-model="model.widget.name"
+			       type="text"
+			       name="name"
+			       class="form-control"
+			       id="widget-name"
+			       placeholder="Widget Name"
+			       required="">
+		</div>
+		<span class="help-block"
+		      ng-show="myForm.name.$error.required && myForm.name.$dirty">
+			Name is required.
+        </span>
+		<div class="form-group">
+			<label for="widget-text">Text</label>
+			<input ng-model="model.widget.text"
+			       type="text"
+			       class="form-control"
+			       id="widget-text"
+			       placeholder="Widget Text">
+		</div>
+		<div class="form-group">
+			<label for="widget-url">URL</label>
+			<input ng-model="model.widget.url"
+			       type="url"
+			       class="form-control"
+			       id="widget-url"
+			       placeholder="Youtube URL"/>
+		</div>
+		<div class="form-group">
+			<label for="widget-width">Width</label>
+			<input ng-model="model.widget.width"
+			       type="text"
+			       class="form-control"
+			       id="widget-width"
+			       placeholder="Video Width in % (eg. 100%)"/>
+		</div>
+	</form>
+	<a ng-click="model.deleteWidget()" class="btn btn-danger  btn-block">Delete</a>
+</div>

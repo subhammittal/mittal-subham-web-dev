@@ -1,0 +1,50 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header stick-to-left left-chevron">
+			<a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget"
+			   class="navbar-link">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+		</div>
+		<a class="navbar-brand left-padding-adjusted" href="">Edit Widget</a>
+		<div class="stick-to-right">
+			<a ng-click="model.updateWidget(model.widget)" class="navbar-link">
+				<span class="glyphicon glyphicon-ok"></span>
+			</a>
+		</div>
+	</div>
+</nav>
+<div class="container">
+	<div ng-if="model.error" class="alert alert-danger">
+		{{model.error}}
+	</div>
+	<div ng-switch="model.widget.widgetType">
+		<div ng-switch-when="HEADER">
+			<div ng-include src="'views/widget/widget-heading.view.client.html'"></div>
+		</div>
+		<div ng-switch-when="HTMLW">
+			<div ng-include src="'views/widget/widget-html.view.client.html'"></div>
+		</div>
+		<div ng-switch-when="TEXT">
+			<div ng-include src="'views/widget/widget-text.view.client.html'"></div>
+		</div>
+		<div ng-switch-when="IMAGE">
+			<div ng-include src="'views/widget/widget-image.view.client.html'"></div>
+		</div>
+		<div ng-switch-when="YOUTUBE">
+			<div ng-include src="'views/widget/widget-youtube.view.client.html'"></div>
+		</div>
+		<div ng-switch-default>
+			Cannot edit this widget.
+		</div>
+	</div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+	<div class="container">
+		<div class="pseudo-margin stick-to-right">
+			<a href="#/user/{{model.userId}}">
+				<span class="glyphicon glyphicon-user"></span>
+			</a>
+		</div>
+	</div>
+</nav>

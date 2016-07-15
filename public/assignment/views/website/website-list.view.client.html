@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header stick-to-left">
+			<a class="navbar-brand" href="">Websites</a>
+		</div>
+		<div class="stick-to-right">
+			<a href="#/user/{{model.userId}}/website/new" class="navbar-link">
+				<span class="glyphicon glyphicon-plus"></span>
+			</a>
+		</div>
+	</div>
+</nav>
+<div class="container">
+	<ul class="list-group">
+		<li ng-repeat="website in model.websites" class="list-group-item borderless">
+			<a href="#/user/{{website.developerId}}/website/{{website._id}}/page">
+				{{website.name}}
+			</a>
+			<p class="pull-right">
+				<a href="#/user/{{website.developerId}}/website/{{website._id}}">
+					<span class="glyphicon glyphicon-cog"></span>
+				</a>
+				<a href="">
+					<span class="glyphicon glyphicon-play"></span>
+				</a>
+			</p>
+		</li>
+	</ul>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+	<div class="container">
+		<div class="pseudo-margin stick-to-right">
+			<a href="#/user/{{model.userId}}">
+				<span class="glyphicon glyphicon-user"></span>
+			</a>
+		</div>
+	</div>
+</nav>

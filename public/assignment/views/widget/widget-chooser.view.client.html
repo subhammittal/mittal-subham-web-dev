@@ -1,0 +1,77 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header stick-to-left left-chevron">
+			<a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget"
+			   class="navbar-link">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+		</div>
+		<a class="navbar-brand left-padding-adjusted" href="">Choose Widget</a>
+	</div>
+</nav>
+<div class="container">
+	<div ng-show="model.error" class="alert alert-danger">
+		{{model.error}}
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item borderless">
+			<a ng-click="model.addWidget('HEADER')" href="">
+				Header
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a href="">
+				Label
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a ng-click="model.addWidget('HTMLW')" href="">
+				HTML
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a ng-click="model.addWidget('TEXT')" href="">
+				Text Input
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a href="">
+				Link
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a href="">
+				Button
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a ng-click="model.addWidget('IMAGE')" href="">
+				Image
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a ng-click="model.addWidget('YOUTUBE')" href="">
+				Youtube
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a href="">
+				Data Table
+			</a>
+		</li>
+		<li class="list-group-item borderless">
+			<a href="">
+				Repeater
+			</a>
+		</li>
+	</ul>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+	<div class="container">
+		<div class="pseudo-margin stick-to-right">
+			<a href="#/user/{{model.userId}}">
+				<span class="glyphicon glyphicon-user"></span>
+			</a>
+		</div>
+	</div>
+</nav>

@@ -1,0 +1,136 @@
+/*!
+ * Start Bootstrap - The Big Picture HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	background: none;
+}
+
+.full {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/boston.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.pic{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 140px;
+	height: 160px;
+	border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0,0,0,.6);
+    -webkit-box-shadow: 0 0 6px rgba(0,0,0,.6);
+    -moz-box-shadow: 0 0 6px rgba(0,0,0,.6);
+    line-height: 160px;
+}
+
+h6 a, h6 a:hover, h6 a:focus, h6 a:active{
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.social{
+	font-size: larger;
+	padding: 0 10px 0 0;
+	color: black!important;
+}
+
+.navbar-inverse .navbar-brand{
+	color: black;
+	font-size: 20px;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover,.navbar-inverse .navbar-brand:hover{
+	color: black;
+	background-color: lightgray;
+}
+
+.navbar-inverse .navbar-collapse{
+	border-color: black;
+}
+
+.navbar-inverse, .navbar-inverse *{
+	background-color: white; 
+}
+
+.navbar-inverse .navbar-nav>li>a{
+	color: black;
+	font-size: 14px;
+}
+
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover,
+.navbar-inverse .navbar-nav>.open>a:focus{
+	color: black;
+	background-color: lightgray!important;
+	border-color: lightgray!important;
+}
+
+.content{
+	color: white!important;
+	text-align: justify;
+}
+
+.content *{
+	color: white;
+	text-align: justify;
+}
+
+.center-content{
+	margin: 0 auto;
+	padding-bottom: 50px;
+}
+
+.social-link{
+	background-color: white!important;
+	color: black!important;
+	text-transform: capitalize;
+	font-size: medium;
+}
+
+.project-link, .project-link:hover, .project-link:focus, .project-link:active{
+	text-decoration: none;
+	color: white;
+}
+
+.project-link:hover, .project-link:focus, .project-link:active{
+	font-weight: bold;
+}
+
+@media (max-width: 767px){
+	.center-content{
+		width: 90%;
+	}
+
+	.traits{
+		display: block;
+	}
+}
+
+@media (min-width: 768px){
+	.center-content{
+		width: 75%;
+	}
+}
+
+@media (min-width: 992px){
+	.center-content{
+		width: 60%;
+	}
+}
+
+@media (min-width: 1200px){
+	.center-content{
+		width: 50%;
+	}
+}

@@ -1,0 +1,37 @@
+{
+  "name": "web-dev",
+  "version": "2016.1.0",
+  "description": "CS5610 Web Development: Developing sites that are dynamic, data driven and interactive.",
+  "keywords": [
+    "MEAN",
+    "express",
+    "angular",
+    "mongodb",
+    "openshift",
+    "youtube api",
+    "single page",
+    "video"
+  ],
+  "homepage": "http://webdev-amraje.rhcloud.com",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.15",
+    "multer": "^1.1.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Akshay Raje <raje.akshay@gmail.com>",
+  "license": "(ISC OR MIT)"
+}

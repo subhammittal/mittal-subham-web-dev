@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header stick-to-left left-chevron">
+			<a href="#/user/{{model.userId}}/website" class="navbar-link">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+		</div>
+		<a class="navbar-brand left-padding-adjusted" href="">New Website</a>
+		<div class="stick-to-right">
+			<a ng-click="model.createWebsite(name, description)" class="navbar-link">
+				<span class="glyphicon glyphicon-ok"></span>
+			</a>
+		</div>
+	</div>
+</nav>
+<div class="container">
+	<div ng-if="model.error" class="alert alert-danger">
+		{{model.error}}
+	</div>
+	<form name="myForm" novalidate>
+		<div class="form-group">
+			<label for="website-name">Name</label>
+			<input ng-model="name"
+			       type="text"
+			       name="wname"
+			       class="form-control"
+			       id="website-name"
+			       placeholder="Website Name"
+			       required=""/>
+		</div>
+		<span class="help-block"
+		      ng-show="(myForm.wname.$invalid && !myForm.wname.$pristine)">
+			Website Name is required
+        </span>
+		<div class="form-group">
+			<label for="description">Description</label>
+			<textarea ng-model="description"
+			          rows="4"
+			          class="form-control"
+			          id="description"
+			          placeholder="Website Description"></textarea>
+		</div>
+	</form>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+	<div class="container">
+		<div class="pseudo-margin stick-to-right">
+			<a href="#/user/{{model.userId}}">
+				<span class="glyphicon glyphicon-user"></span>
+			</a>
+		</div>
+	</div>
+</nav>

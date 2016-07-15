@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="alert alert-danger alert-dismissible">
+		Features of this application will not work because server side application logic has been disabled.<br/><br/>
+		Please checkout the project website. <a href="/project" class="btn btn-success">iTube</a>
+	</div>
+	<div ng-show="model.loginError" class="alert alert-danger alert-dismissible">
+		{{model.loginError}}
+	</div>
+	<h1>Login</h1>
+	<form name="myForm" novalidate>
+		<input ng-model="username"  name="username" type="text"
+		       class="form-control" placeholder="Username" required=""
+		       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+		<span ng-show="myForm.$submitted && myForm.username.$error.required" class="help-block">
+                Username is required
+        </span>
+		<input ng-model="password" name="password" type="password"
+		       class="form-control" placeholder="Password" required/>
+		<span ng-show="myForm.$submitted && myForm.password.$error.required" class="help-block">
+                Password is required
+        </span>
+		<button type="submit" ng-click="myForm.$valid && model.login(username, password)"
+		        class="btn btn-primary btn-block">Login</button>
+		<button ng-click="model.register()" class="btn btn-success btn-block">Register</button>
+		<a href="/auth/assignment/facebook" class="btn btn-primary btn-block">
+			<span class="fa fa-facebook"></span>
+			Facebook
+		</a>
+	</form>
+</div>
