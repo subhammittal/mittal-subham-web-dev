@@ -14,5 +14,13 @@
     "start": "node server.js"
   },
   "author": "Jose G. Annunziato",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subhammittal/mittal-subham-web-dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/subhammittal/mittal-subham-web-dev/issues"
+  },
+  "homepage": "https://github.com/subhammittal/mittal-subham-web-dev#readme"
 }
