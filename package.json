@@ -12,7 +12,7 @@
     "single page",
     "video"
   ],
-  "homepage": "http://webdev-amraje.rhcloud.com",
+  "homepage": "http://webdevelopment-mittalsubham.rhcloud.com",
   "main": "server.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
